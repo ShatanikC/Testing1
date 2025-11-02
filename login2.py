@@ -70,17 +70,13 @@ def main_app(user_email):
     
 
 def auth_screen():
-    st.title("🔐 Operations")
+    st.title("Operations Login")
     option = st.header("Login")
     with st.form(key='login_form'):
         email = st.text_input("Email")
         password = st.text_input("Password", type="password")
         submit_button=st.form_submit_button('Submit')
-        if submit_button:    
-            # if option == "Sign Up":
-            #     user = sign_up(email, password)
-            #     if user and user.user:
-            #         st.success("Registration successful. Please log in.")
+        if submit_button:   
             user = sign_in(email, password)
             if user and user.user:
                 st.session_state.user_email = user.user.email
@@ -93,5 +89,6 @@ if st.session_state.user_email and st.session_state['authenticated']:
     main_app(st.session_state.user_email)
 else:
     auth_screen()
+
 
 
