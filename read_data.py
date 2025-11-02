@@ -6,7 +6,7 @@ import pandas as pd
 from datetime import datetime
 import time
 from typing import Union,cast,Sequence
-
+from zoneinfo import ZoneInfo
 def connect_to_gsheet(sheet_name='Sheet1'):
     scope = ["https://spreadsheets.google.com/feeds", 
              'https://www.googleapis.com/auth/spreadsheets',
@@ -20,7 +20,7 @@ def connect_to_gsheet(sheet_name='Sheet1'):
 
 
 sheet_by_name = connect_to_gsheet()
-st.title("Simple Data Entry using Streamlit")
+st.title("Operations Documentation System")
 
 dpr:list[Union[int, str]]=[0,0,0,0,0,0,0,0,0,0]
 def daily_production_report():
@@ -53,27 +53,29 @@ def daily_production_report():
         st.write(f'Production started on {date}')
     process_started=st.button('Process Start Time',key='pst')
     if process_started and dpr[5]==0:
-        dpr[5]=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        dpr[5]=datetime.now(ZoneInfo("Asia/Kolkata")).strftime('%Y-%m-%d %H:%M:%S')
         st.write(f'Process started at {dpr[5]}')
     reaction_started=st.button('Reaction Start Time',key='rst')
     if reaction_started and dpr[6]==0:
-        dpr[6]=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        dpr[6]=datetime.now(ZoneInfo("Asia/Kolkata")).strftime('%Y-%m-%d %H:%M:%S')
         st.write(f'Reaction started at {dpr[6]}')
     cooling_started=st.button('Cooling Start Time',)
     if cooling_started and dpr[7]==0:
-        dpr[7]=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        dpr[7]=datetime.now(ZoneInfo("Asia/Kolkata")).strftime('%Y-%m-%d %H:%M:%S')
         st.write(f'Cooling started at {dpr[7]}')
     filter_started=st.button('Filter Start Time',key='fst')
     if filter_started and dpr[8]==0:
-        dpr[8]=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        dpr[8]=datetime.now(ZoneInfo("Asia/Kolkata")).strftime('%Y-%m-%d %H:%M:%S')
         st.write(f'Filter started at {dpr[8]}')
     process_completed=st.button('Process Completed at Time',key='pct')
     if process_completed and dpr[9]==0:
-        dpr[9]=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        dpr[9]=datetime.now(ZoneInfo("Asia/Kolkata")).strftime('%Y-%m-%d %H:%M:%S')
         st.write(f'Process Completed at {dpr[9]}')
+    dpr_df=pd.DataFrame(dpr).T
+    st.dataframe(dpr_df)
     submit_button=st.button('Submit',key='Submit_DPR')
     if submit_button:
-        st.write(f"Form submitted at {datetime.now()}!")
+        st.write(f"Form submitted at {datetime.now(ZoneInfo('Asia/Kolkata'))}!")
         st.write(f'Values updated: {dpr}')
         connect_to_gsheet(sheet_name='Daily Production Report').append_row(dpr) 
         dpr=[0,0,0,0,0,0,0,0,0,0]
@@ -98,39 +100,41 @@ def pre_operation_checksheet():
         st.write(f'You added {batch_Number}')
     raw_material=st.button('CHECKED RAW MATERIAL',key='crm')
     if raw_material and poc[2]==0:
-        poc[2]=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        st.write(f'You added {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
+        poc[2]=datetime.now(ZoneInfo("Asia/Kolkata")).strftime('%Y-%m-%d %H:%M:%S')
+        st.write(f'You added {datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%Y-%m-%d %H:%M:%S")}')
     check_water_sample=st.button('CHECKED D.M. WATER SAMPLE',key='cws')
     if check_water_sample and poc[3]==0:
-        poc[3]=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        st.write(f'You added {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
+        poc[3]=datetime.now(ZoneInfo("Asia/Kolkata")).strftime('%Y-%m-%d %H:%M:%S')
+        st.write(f'You added {datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%Y-%m-%d %H:%M:%S")}')
     charge_water_sample=st.button('CHARGE D.M.  WATER',key='chws')
     if charge_water_sample and poc[4]==0:
-        poc[4]=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        st.write(f'You added {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
+        poc[4]=datetime.now(ZoneInfo("Asia/Kolkata")).strftime('%Y-%m-%d %H:%M:%S')
+        st.write(f'You added {datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%Y-%m-%d %H:%M:%S")}')
     close_reactor=st.button('CLOSE REACTOR  BOTTOM  VALVE',key='crbv')
     if close_reactor and poc[5]==0:
-        poc[5]=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        st.write(f'You added {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
+        poc[5]=datetime.now(ZoneInfo("Asia/Kolkata")).strftime('%Y-%m-%d %H:%M:%S')
+        st.write(f'You added {datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%Y-%m-%d %H:%M:%S")}')
     close_valve=st.button('CLOSE MONOMER TANK  BOTTOM  &  ROTAMETER VALVE',key='cntb')
     if close_valve and poc[6]==0:
-        poc[6]=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        st.write(f'You added {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
+        poc[6]=datetime.now(ZoneInfo("Asia/Kolkata")).strftime('%Y-%m-%d %H:%M:%S')
+        st.write(f'You added {datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%Y-%m-%d %H:%M:%S")}')
     charge_cooling_tower=st.button('CHARGE  COOLING TOWER CHEMICAL',key='cct')
     if charge_cooling_tower and poc[7]==0:
-        poc[7]=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        st.write(f'You added {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
+        poc[7]=datetime.now(ZoneInfo("Asia/Kolkata")).strftime('%Y-%m-%d %H:%M:%S')
+        st.write(f'You added {datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%Y-%m-%d %H:%M:%S")}')
     take_belt_off=st.button('TAKE OFF THE BELT  OF THE REACTOR AND LINK OFF ELECTRICAL  CONNECTION  FROM MAIN SWITCH WHEN  IT CLEANS',key='tbo')
     if take_belt_off and poc[8]==0:
-        poc[8]=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        st.write(f'You added {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
+        poc[8]=datetime.now(ZoneInfo("Asia/Kolkata")).strftime('%Y-%m-%d %H:%M:%S')
+        st.write(f'You added {datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%Y-%m-%d %H:%M:%S")}')
     check_monomer_tank=st.button('CHECK  MONOMER TANK AFTER  REACTION COMPLETE',key='cmt')
     if check_monomer_tank and poc[9]==0:
-        poc[9]=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        st.write(f'You added {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
+        poc[9]=datetime.now(ZoneInfo("Asia/Kolkata")).strftime('%Y-%m-%d %H:%M:%S')
+        st.write(f'You added {datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%Y-%m-%d %H:%M:%S")}')
     submit_button = st.button("Submit")
+    poc_df=pd.DataFrame(poc).T
+    st.dataframe(poc_df)
     if submit_button:
-        st.write(f"Form submitted at {datetime.now()}!")
+        st.write(f"Form submitted at {datetime.now(ZoneInfo('Asia/Kolkata'))}!")
         st.write(f'Values updated: {poc}')
         connect_to_gsheet(sheet_name='Pre Operation Checksheet').append_row(poc)
         poc=[0,0,0,0,0,0,0,0,0,0]
@@ -141,7 +145,7 @@ def pre_operation_checksheet():
 pr:list[Union[None,int,str]]=[0]*35
 
 def production_report():
-    st.header('Production Report')
+    st.header('Production Report (In Kgs)')
     global pr
     col1,col2=st.columns(2)
     with col1:
@@ -322,7 +326,7 @@ def production_report():
           pr[34]=date.isoformat()
     submit_button = st.button("Submit",key='SUBMIT_PR')
     if submit_button:
-        st.write(f"Form submitted at {datetime.now()}!")
+        st.write(f"Form submitted at {datetime.now(ZoneInfo('Asia/Kolkata'))}!")
         st.write(f'Values updated: {pr}')
         connect_to_gsheet(sheet_name='Production Report').append_row(cast(Sequence[str | int | float],pr))
         pr=[0]*35
@@ -347,11 +351,11 @@ def in_process_and_final_testing_report():
         v.append(number_container)
         total_qty=st.text_input('TOTAL QUANTITY IN CONTAINER',key=f'total_qty')
         v.append(total_qty)
-        submit_button = st.form_submit_button(label="Submit")
         date=st.date_input('Date',key='Date ftr')
         v.append(date.isoformat())
+        submit_button = st.form_submit_button(label="Submit")  
         if submit_button:
-            st.write(f"Form submitted at {datetime.now()}!")
+            st.write(f"Form submitted at {datetime.now(ZoneInfo('Asia/Kolkata'))}!")
             connect_to_gsheet(sheet_name='In Process And Final Testing Report').append_row(v)
             time.sleep(2)
             st.rerun()
