@@ -19,13 +19,6 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 if 'authenticated' not in st.session_state:
     st.session_state['authenticated'] = False
 
-# def sign_up(email, password):
-#     try:
-#         user = supabase.auth.sign_up({"email": email, "password": password})
-#         return user
-#     except Exception as e:
-#         st.error(f"Registration failed: {e}")
-
 def sign_in(email, password):
     try:
         user = supabase.auth.sign_in_with_password({"email": email, "password": password})
@@ -50,9 +43,9 @@ def main_app(user_email):
     with tab1:
         col1,col2=st.columns(2)
         with col1:
-            read_data.daily_production_report()
-        with col2:
             read_data.production_report()
+        with col2:
+            read_data.daily_production_report()
         if st.button("Logout",key='logout1'):
             sign_out()
     with tab2:    
@@ -65,7 +58,9 @@ def main_app(user_email):
             sign_out()
     with tab3:
         stock_register.opening_balance()
+        stock_register.raw_material_consumed()
         stock_register.raw_material_received()
+        
         if st.button("Logout",key='logout3'):
             sign_out()
     with tab4:
@@ -98,4 +93,5 @@ if st.session_state.user_email and st.session_state['authenticated']:
     main_app(st.session_state.user_email)
 else:
     auth_screen()
+
 
